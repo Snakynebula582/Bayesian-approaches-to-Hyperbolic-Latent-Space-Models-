@@ -703,3 +703,23 @@ initialise_hyperbolic_clusters <- function(
   )
 }
 
+
+poincare_from_hyperboloid <- function(Z, eps = 1e-10) {
+  Z <- as.matrix(Z)
+  
+  if (ncol(Z) != 3) {
+    stop("Z must be an n x 3 matrix.")
+  }
+  
+  denom <- 1 + Z[, 1]
+  
+  if (any(!is.finite(denom)) || any(abs(denom) < eps)) {
+    stop("Invalid hyperboloid points for Poincare projection.")
+  }
+  
+  cbind(
+    Z[, 2] / denom,
+    Z[, 3] / denom
+  )
+}
+
